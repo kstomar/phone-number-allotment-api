@@ -8,10 +8,6 @@ class AllotedNumbersController < ApplicationController
     render json: @alloted_numbers
   end
 
-  def available_numbers
-    @alloted_numbers = AllotedNumber.pluck(:number)
-  end
-
   # POST /alloted_numbers
   def create
     @alloted_number = AllotedNumber.new(alloted_number_params)
