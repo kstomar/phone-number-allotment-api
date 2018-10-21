@@ -8,14 +8,10 @@ class AllotedNumber < ApplicationRecord
   before_create :check_availability_and_assign_number
 
   def check_availability_and_assign_number
-    if self.number
-      if AllotedNumber.pluck(:number).include? self.number
-        self.number = nil
-        get_available_number
-      end
-    else
-      get_available_number
+    if self.number && (AllotedNumber.pluck(:number).include? self.number)
+      self.number = nil
     end
+    get_available_number
   end
 
   def strip_dash_from_number
@@ -23,9 +19,9 @@ class AllotedNumber < ApplicationRecord
   end
 
   def valid_number
-    return true unless number
-    if (number.to_i < 1111111111) || (number.to_i > 9999999999)
-      errors.add(:number, "Please enter a valid self.number('111-111-1111' - '999-999-9999')")
+    return true unless self.number
+    if (self.number.to_i < 1111111111) || (self.number.to_i > 9999999999)
+      errors.add(:number, "Please enter a valid number('111-111-1111' - '999-999-9999')")
     end
   end
 
